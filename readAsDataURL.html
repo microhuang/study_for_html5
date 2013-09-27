@@ -1,0 +1,54 @@
+
+<!-- saved from url=(0074)http://www.jsmix.com/blog/wp-content/uploads/2010/08/file-reader-demo.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>File Reader  解决图片上传前预览</title>
+		
+		<style>
+			body{
+				text-align:center;
+			}
+			#demo_result img{
+				border:2px solid #369;
+				padding:3px;
+			}
+			p{
+				padding:20px 0;
+			}
+			.warn{
+				font-weight:bold;
+				color:red;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<p><label>请选择一个图像文件：</label><input type="file" id="demo_input"></p>
+		<div id="demo_result"></div>
+		
+		
+		<script type="text/javascript">
+			var result = document.getElementById("demo_result");
+			var input = document.getElementById("demo_input");
+
+			if(typeof FileReader === 'undefined'){
+				result.innerHTML = "<p class='warn'>抱歉，你的浏览器不支持 FileReader</p>";
+				input.setAttribute('disabled','disabled');
+			}else{
+				input.addEventListener('change',readFile,false);
+			}
+			
+			function readFile(){
+				var file = this.files[0];
+				if(!/image\/\w+/.test(file.type)){
+					alert("请确保文件为图像类型");
+					return false;
+				}
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(e){
+					result.innerHTML = '<img src="'+this.result+'" alt=""/>'
+				}
+			}
+		</script>
+	
+<div><object id="ClCache" click="sendMsg" host="" width="0" height="0"></object></div></body></html>
