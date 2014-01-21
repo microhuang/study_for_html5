@@ -1,0 +1,50 @@
+//worker.js
+/*onmessage =function (evt){
+  var d = evt.data;//通过evt.data获得发送来的数据
+  postMessage( d );//将获取到的数据发送会主线程
+}*/
+
+var fibonacci =function(n) {
+    return n <2? n : arguments.callee(n -1) + arguments.callee(n -2);
+};
+onmessage =function(event) {
+    var n = parseInt(event.data, 10);
+    postMessage(fibonacci(n));
+};
+
+
+
+//.html
+<html>
+  <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+ <script type="text/javascript">
+ //WEB页主线程
+ var worker =new Worker("worker.js"); //创建一个Worker对象并向它传递将在新线程中执行的脚
+
+本的URL
+ worker.onmessage =function(evt){     //接收worker传过来的数据函数
+   console.log(evt.data);              //输出worker发送来的数据
+ }
+ worker.postMessage(20);     //向worker发送数据
+
+
+
+var fibonacci =function(n) {
+    return n <2? n : arguments.callee(n -1) + arguments.callee(n -2);
+};
+//fibonacci(36)  //非worker方式，浏览器直接卡死
+
+
+ </script>
+  </head>
+    <body>
+        <form method="post" action="http://upd1.ajkimg.com/upload" 
+
+enctype="multipart/form-data">
+        <label for="file">file: </label>
+        <input type="file" name="file" value="" />
+        <input type="submit" name="" value="submit" />
+        </form>
+    </body>
+</html>
